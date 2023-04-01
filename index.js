@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const PORT = 3000
 const productsRouter = require('./routes/messages.js')
+const { ErrorHandler, LogErrors} = require('./middlewares/errorHandles')
 
 //middlewares
 app.use( express.json() )
@@ -36,7 +37,8 @@ app.post('/user', (req, res) => {
     
     const body = req.body
 
-    res.json({
+    //condigo de respuesta para los recurso
+    res.status(201).json({
         message: 'created',
         data: body
     })
@@ -59,10 +61,37 @@ app.delete('/user/:id', (req, res) => {
 })
 
 
-
-
 //routes separados
 app.use('/messages', productsRouter)
+
+//capturar errores desde el routing de forma que ese error va hacia el catch más cercano
+//MIDDLEWARES
+/**
+ * SON FUNCIONES QUE ESTÁN EN LA MITAD PARA VALIDAR ANTES DE RECIBIR Y MANDAR UNA RESPUESTA
+ * SE PUEDEN USAR DE MANERA GLOBAL Y LOCAL
+ * FUNCIONAN DE MANERA SECUANCIAL
+ * 
+ * - FUNCIONAN COMO PIPES
+ * - VALIDAR DATOS
+ * - CAPTURAR ERRORES
+ * - VALIDAR PERMISOS
+ * - CONTROLAR ACCESOS
+ * 
+ */
+
+
+app.get('/example', (req, res, next) => {
+    try {
+        //logica
+    } catch (error) {
+        next(error.message) //mandamos el error hacia los middlewares de tipo error de manera
+        //global, que siga la ejecución
+    }
+})
+
+
+app.use(LogErrors)
+app.use(ErrorHandler)
 
 
 app.listen(PORT, () => {
