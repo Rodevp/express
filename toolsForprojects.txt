@@ -1,0 +1,14 @@
+joi -> validador de datos que me mandan desde el cliente
+
+boom -> middleware para manejar errores
+
+Middleware para habilitar CORS (Cross-origin resource sharing) en nuestras rutas o aplicación.
+http://expressjs.com/en/resources/middleware/cors.html
+
+Un logger de solicitudes HTTP para Node.js. http://expressjs.com/en/resources/middleware/morgan.html
+
+Helmet nos ayuda a proteger nuestras aplicaciones Express configurando varios encabezados HTTP. 
+¡No es a prueba de balas de plata, pero puede ayudar! https://github.com/helmetjs/helmet
+
+Passport es un middleware que nos permite establecer diferentes estrategias de autenticación a nuestras aplicaciones.
+https://github.com/jaredhanson/passport
